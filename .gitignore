@@ -1,0 +1,15 @@
+.DS_Store
+
+.target
+.settings/
+.metadata
+.project
+.classpath
+local.properties
+
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
