@@ -6,6 +6,5 @@ public class App
     {
         System.out.println("Executed");
         System.out.println( System.getProperty("test.system.prop"));
-        System.out.println (System.getProperty("parent.property"));
     }
 }

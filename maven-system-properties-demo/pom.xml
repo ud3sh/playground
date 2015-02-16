@@ -45,7 +45,6 @@
               <files>
                 <file>src/main/resources/maven.properties</file>
                 <file>src/main/resources/system.properties</file>
-                <file>../parent.properties</file>
               </files>
             </configuration>
           </execution>
@@ -77,15 +76,9 @@
                 <configuration>
                     <mainClass>${test.maven.prop}</mainClass> <!--  THIS IS LOADED FROM THE MAIN CLASS -->
                     <systemProperties>
-                     <!--
-                         <systemProperty>
+                        <systemProperty>
                             <key>test.system.prop</key>
                             <value>${test.system.prop}</value>
-                        </systemProperty>
-                    -->
-                        <systemProperty>
-                            <key>parent.property</key>
-                            <value>${parent.property}</value>
                         </systemProperty>
                     </systemProperties>
                 </configuration>
