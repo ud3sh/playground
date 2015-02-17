@@ -303,8 +303,6 @@ class Person {
         self.firstName = firstName
         self.lastName = lastName
     }
-    
-    
 }
 
 class ClonablePerson: Person, Clonable, EntityWithId {
