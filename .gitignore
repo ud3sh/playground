@@ -6,7 +6,8 @@
 .project
 .classpath
 local.properties
-
+*.iml
+.idea/
 target/
 pom.xml.tag
 pom.xml.releaseBackup
