@@ -11,14 +11,36 @@ Run the following from the project root
 sbt clean package assembly
 
 --RUNNING STANDALONE--
+Demoing each app consists of writing events to the input source, and either running the app as a standalone java class or submitting it as a spark job
+hw-spark-conf.properties may need to be updated
 
 1)SocketStreamWordCounter
-Standalone:
-Run SocketStreamWordCounter via the command line (with the properties file as an optional argument)
+
+Event Producer:
+write to port 9011 (see SocketStreamWordCounter for more info) on machine specificied by socket.streaming.host in hw-spark.conf.properties
+
+Streaming App:
+java -cp <jar-file-from-build-step> com.contxt.spark.streaming.hw.SocketStreamWordCounter
 
 2)KafkaStreamWordCounter
 
+Event Producer : 
+java -cp <jar-file-from-build-step> com.contxt.spark.streaming.hw.producer.DummyKafkaEventProducer
+
+Streaming App  : 
+java -cp <jar-file-from-build-step> com.contxt.spark.streaming.hw.KafkaStreamWordCounter
+
+
+3)KinesisStreamWordCounter
+
+Event Producer:
+java -cp <jar-file-from-build-step> com.contxt.spark.streaming.hw.producer.DummyKinesisEventProducer
+
+Streaming App :
+java -cp <jar-file-from-build-step> com.contxt.spark.streaming.hw.KinesisStreamWordCounter
+
 ==DEPLOYING==
+Run the above streaming app classes as spark job
 
 ==NOTES==
 Output is dumped after each window to output.dir set in hw-spark-conf.properties (/tmp/word-count-app by default).
