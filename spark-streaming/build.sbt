@@ -8,11 +8,12 @@ resolvers ++= Seq(
   Resolver.mavenLocal
 )
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "1.5.0" % "provided",
+  "org.apache.spark" %% "spark-core" % "1.6.1" % "provided",
   "org.apache.spark" %% "spark-streaming" % "1.5.0" % "provided",
-  "org.apache.spark" %% "spark-streaming-kafka" % "1.5.0",
-  "org.apache.spark" %% "spark-streaming-kinesis-asl" % "1.5.0",
-  "org.specs2" %% "specs2-core" % "3.6.1" % "test"
+  "org.apache.spark" %% "spark-streaming-kafka" % "1.6.1",
+  "org.apache.spark" %% "spark-streaming-kinesis-asl" % "1.6.1",
+  "org.specs2" %% "specs2-core" % "3.6.1" % "test",
+  "junit" % "junit" % "4.8.1"
 )
 mergeStrategy in assembly <<= (mergeStrategy in assembly) { (old) =>
 {

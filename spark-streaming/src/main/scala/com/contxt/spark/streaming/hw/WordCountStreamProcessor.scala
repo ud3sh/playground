@@ -3,8 +3,9 @@ package com.contxt.spark.streaming.hw
 import java.io.{FileWriter, BufferedWriter, File, FileReader}
 import java.util.Properties
 
+import org.apache.spark.rdd.RDD
 import org.apache.spark.{Logging, SparkConf}
-import org.apache.spark.streaming.{StreamingContextState, Milliseconds, StreamingContext}
+import org.apache.spark.streaming.{Time, StreamingContextState, Milliseconds, StreamingContext}
 import org.apache.spark.streaming.dstream.{ReceiverInputDStream, DStream}
 
 /**
@@ -14,6 +15,7 @@ object WordCountStreamProcessor extends Logging {
 
   type StreamCreationFunction[T] = (StreamingContext, Properties) => ReceiverInputDStream[T]
   type ExtractWordStreamFunction[T] = (DStream[T])=>DStream[String]
+  type WordHandler = (DStream[(String, Int)]) => Unit
 
   def start[T](commandLineArgs:Array[String],
                streamCreationFunction: StreamCreationFunction[T],
@@ -54,10 +56,9 @@ object WordCountStreamProcessor extends Logging {
 
     log.info ("Streaming terminated, attempting to gracefully shutdown ..")
     terminate(streamingContext, stream, outputDir);
-
   }
 
-  protected def processStream[T](stream: DStream[T], lineExtractionFunction: ExtractWordStreamFunction[T]) = {
+  def processStream[T](stream: DStream[T], lineExtractionFunction: ExtractWordStreamFunction[T]) = {
 
     val words = lineExtractionFunction(stream)
     val pairs = words.map(word => (word.toLowerCase(), 1))
@@ -66,6 +67,23 @@ object WordCountStreamProcessor extends Logging {
     val totalWordCounts = pairs.updateStateByKey(updateFunction)
 
     (totalWordCounts, windowWordCounts)
+  }
+
+  def processStream2[T](stream: DStream[T], lineExtractionFunction: ExtractWordStreamFunction[T])(
+    totalWordCountHandler: WordHandler,
+    windowWordCountHandler: WordHandler): Unit = {
+
+    val words = lineExtractionFunction(stream)
+    val pairs = words.map(word => (word.toLowerCase(), 1))
+
+    val windowWordCounts = pairs.reduceByKey(_ + _)
+    val totalWordCounts = pairs.updateStateByKey(updateFunction)
+    totalWordCounts.count()
+
+    totalWordCountHandler(totalWordCounts)
+    windowWordCountHandler(windowWordCounts)
+    //windowWordCounts.foreachRDD((rdd: RDD[(String, Int)], time:Time) => windowWordCountHandler(rdd, time))
+    //totalWordCounts.foreachRDD((rdd: RDD[(String, Int)], time:Time) => totalWordCountHandler(rdd, time))
   }
 
   def updateFunction(newOccurences: Seq[Int], state:Option[Int]) = {
@@ -94,5 +112,23 @@ object WordCountStreamProcessor extends Logging {
     val bw = new BufferedWriter(new FileWriter(file))
     bw.write(msg)
     bw.close()
+  }
+
+
+  def defaultWordCountHandler = (wordsCount: RDD[(String, Int)], time: Time) => {
+    val counts = time + ": " + wordsCount.collect().mkString("[", ", ", "]")
+    System.out.println(counts);
+  }
+
+  def defaultTotalWordHandler(stream: DStream[(String, Int)]):Unit = {
+    stream.count();
+    stream.saveAsTextFiles("/tmp/word-count-app/" + "/test-total")
+    stream.print()
+  }
+
+  def defaultWindowWorldHandler(stream: DStream[(String, Int)]):Unit= {
+    stream.count();
+    stream.saveAsTextFiles("/tmp/word-count-app/" + "/test-window")
+    stream.print()
   }
 }

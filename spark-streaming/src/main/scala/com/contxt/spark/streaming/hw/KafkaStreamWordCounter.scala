@@ -20,13 +20,6 @@ object KafkaStreamWordCounter extends Logging {
 
   def createStream (streamingContext: StreamingContext, options:Properties): ReceiverInputDStream[(String, String)] = {
 
-    val props: Properties = new Properties
-    props.put("bootstrap.servers", options.getProperty("kafka.broker", "127.0.0.1:9092"))
-    props.put("client.id", "streaming")
-    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
-    props.put("block.on.buffer.full", "false")
-
     val kafkaStream = KafkaUtils.createStream(
       streamingContext,
       options.getProperty("zookeeper.quorum", "127.0.0.1:2181"),
