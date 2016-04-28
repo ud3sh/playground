@@ -2,9 +2,159 @@
 <report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
     <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
     <property name="units">in</property>
+    <method name="clientInitialize"><![CDATA[//head.js ("https://code.jquery.com/jquery-1.9.1.min.js")]]></method>
     <property name="iconFile">/templates/blank_report.gif</property>
     <property name="bidiLayoutOrientation">ltr</property>
     <property name="imageDPI">72</property>
+    <data-sources>
+        <script-data-source name="LCBO-products-data-source" id="4">
+            <method name="open"><![CDATA[importPackage(Packages.org.apache.commons.io);
+importPackage(Packages.java.io);
+
+//globals
+itemLength = 0;
+rowCount = 0;
+answers = null;
+
+function ajaxCall(url, callback, synchronous) {
+	/*
+	var xhr = {};
+	xhr.response = "{\"items\":[{\"owner\":{\"reputation\":604,\"user_id\":2682748,\"user_type\":\"registered\",\"profile_image\":\"https://www.gravatar.com/avatar/67c14a56172f77e11ef7a2dba91112db?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"Udesh K.\",\"link\":\"http://stackoverflow.com/users/2682748/ruslan-k\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851606,\"creation_date\":1461851606,\"answer_id\":36916797,\"question_id\":36916578},{\"owner\":{\"reputation\":445,\"user_id\":6160527,\"user_type\":\"registered\",\"profile_image\":\"https://www.gravatar.com/avatar/3dcf4ae7961cb32685adbb6ebf971ad2?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"jamiedanq\",\"link\":\"http://stackoverflow.com/users/6160527/jamiedanq\"},\"is_accepted\":false,\"score\":1,\"last_activity_date\":1461851600,\"last_edit_date\":1461851600,\"creation_date\":1461850634,\"answer_id\":36916387,\"question_id\":36915854},{\"owner\":{\"reputation\":11,\"user_id\":3671890,\"user_type\":\"registered\",\"profile_image\":\"https://graph.facebook.com/100001133163846/picture?type=large\",\"display_name\":\"Jan-Willem\",\"link\":\"http://stackoverflow.com/users/3671890/jan-willem\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851590,\"creation_date\":1461851590,\"answer_id\":36916794,\"question_id\":36915580},{\"owner\":{\"reputation\":18,\"user_id\":4628448,\"user_type\":\"registered\",\"profile_image\":\"https://graph.facebook.com/810867468989619/picture?type=large\",\"display_name\":\"Victor Gazotti\",\"link\":\"http://stackoverflow.com/users/4628448/victor-gazotti\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851588,\"creation_date\":1461851588,\"answer_id\":36916793,\"question_id\":29494120},{\"owner\":{\"reputation\":4044,\"user_id\":424129,\"user_type\":\"registered\",\"accept_rate\":81,\"profile_image\":\"https://i.stack.imgur.com/gkMl8.png?s=128&amp;g=1\",\"display_name\":\"Ed Plunkett\",\"link\":\"http://stackoverflow.com/users/424129/ed-plunkett\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851585,\"last_edit_date\":1461851585,\"creation_date\":1461699355,\"answer_id\":36874208,\"question_id\":36873983},{\"owner\":{\"reputation\":26,\"user_id\":3293210,\"user_type\":\"registered\",\"profile_image\":\"https://i.stack.imgur.com/PdpwM.jpg?s=128&amp;g=1\",\"display_name\":\"G.Clavier\",\"link\":\"http://stackoverflow.com/users/3293210/g-clavier\"},\"is_accepted\":false,\"score\":1,\"last_activity_date\":1461851583,\"last_edit_date\":1461851583,\"creation_date\":1461850315,\"answer_id\":36916261,\"question_id\":36915774},{\"owner\":{\"reputation\":9618,\"user_id\":1034448,\"user_type\":\"registered\",\"profile_image\":\"https://i.stack.imgur.com/NkW6C.jpg?s=128&amp;g=1\",\"display_name\":\"JMM\",\"link\":\"http://stackoverflow.com/users/1034448/jmm\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851583,\"creation_date\":1461851583,\"answer_id\":36916791,\"question_id\":36916687},{\"owner\":{\"reputation\":174,\"user_id\":5950385,\"user_type\":\"registered\",\"profile_image\":\"https://i.stack.imgur.com/fSHKK.jpg?s=128&amp;g=1\",\"display_name\":\"Mohammed Shafeek\",\"link\":\"http://stackoverflow.com/users/5950385/mohammed-shafeek\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851573,\"creation_date\":1461851573,\"answer_id\":36916789,\"question_id\":36916036},{\"owner\":{\"reputation\":252,\"user_id\":548504,\"user_type\":\"registered\",\"accept_rate\":75,\"profile_image\":\"https://www.gravatar.com/avatar/abb4272fb9ccd0d882b2bfc878b68358?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"bhappy\",\"link\":\"http://stackoverflow.com/users/548504/bhappy\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851569,\"creation_date\":1461851569,\"answer_id\":36916786,\"question_id\":36334449},{\"owner\":{\"reputation\":4103,\"user_id\":5233410,\"user_type\":\"registered\",\"profile_image\":\"https://www.gravatar.com/avatar/8f5e1cfa6d6fe0efa15615ccfdb78fb2?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"Nkosi\",\"link\":\"http://stackoverflow.com/users/5233410/nkosi\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851566,\"last_edit_date\":1461851566,\"creation_date\":1461850683,\"answer_id\":36916407,\"question_id\":36913418},{\"owner\":{\"reputation\":862,\"user_id\":4870695,\"user_type\":\"registered\",\"profile_image\":\"https://www.gravatar.com/avatar/55d412248b026d3d0adfda5cf065af64?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"Jimbou\",\"link\":\"http://stackoverflow.com/users/4870695/jimbou\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851566,\"creation_date\":1461851566,\"answer_id\":36916785,\"question_id\":36915806},{\"owner\":{\"reputation\":416023,\"user_id\":335858,\"user_type\":\"registered\",\"accept_rate\":79,\"profile_image\":\"https://www.gravatar.com/avatar/4af3541c00d591e9a518b9c0b3b1190a?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"dasblinkenlight\",\"link\":\"http://stackoverflow.com/users/335858/dasblinkenlight\"},\"is_accepted\":false,\"score\":2,\"last_activity_date\":1461851565,\"last_edit_date\":1461851565,\"creation_date\":1461851066,\"answer_id\":36916575,\"question_id\":36916445},{\"owner\":{\"reputation\":110,\"user_id\":6234108,\"user_type\":\"registered\",\"profile_image\":\"https://i.stack.imgur.com/slaK1.png?s=128&amp;g=1\",\"display_name\":\"Jems Yadav\",\"link\":\"http://stackoverflow.com/users/6234108/jems-yadav\"},\"is_accepted\":false,\"score\":1,\"last_activity_date\":1461851564,\"creation_date\":1461851564,\"answer_id\":36916783,\"question_id\":27645122},{\"owner\":{\"reputation\":43,\"user_id\":5736576,\"user_type\":\"registered\",\"accept_rate\":73,\"profile_image\":\"https://www.gravatar.com/avatar/46cbdc23744c1149de7db941b6adaeae?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"John Goldman\",\"link\":\"http://stackoverflow.com/users/5736576/john-goldman\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851562,\"creation_date\":1461851562,\"answer_id\":36916782,\"question_id\":2642613},{\"owner\":{\"reputation\":664,\"user_id\":3541063,\"user_type\":\"registered\",\"accept_rate\":100,\"profile_image\":\"https://www.gravatar.com/avatar/6adceaa65067703d17fb70863dfa5bc8?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"werediver\",\"link\":\"http://stackoverflow.com/users/3541063/werediver\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851559,\"last_edit_date\":1461851559,\"creation_date\":1461850574,\"answer_id\":36916364,\"question_id\":14394014},{\"owner\":{\"reputation\":211,\"user_id\":1669490,\"user_type\":\"registered\",\"profile_image\":\"https://www.gravatar.com/avatar/3284b29f9159b29e16ada228f6d86d75?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"ZacharyAKlein\",\"link\":\"http://stackoverflow.com/users/1669490/zacharyaklein\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851558,\"last_edit_date\":1461851558,\"creation_date\":1461802024,\"answer_id\":36903024,\"question_id\":36902798},{\"owner\":{\"reputation\":45,\"user_id\":1557486,\"user_type\":\"registered\",\"accept_rate\":50,\"profile_image\":\"https://www.gravatar.com/avatar/ddcc43407e37f485de28d61bbd2f1982?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"Hasina\",\"link\":\"http://stackoverflow.com/users/1557486/hasina\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851558,\"creation_date\":1461851558,\"answer_id\":36916780,\"question_id\":36916177},{\"owner\":{\"reputation\":1,\"user_id\":6266999,\"user_type\":\"unregistered\",\"profile_image\":\"https://www.gravatar.com/avatar/75f25cd49c524c34c7a2cb83b04915bd?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"aditi\",\"link\":\"http://stackoverflow.com/users/6266999/aditi\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851554,\"creation_date\":1461851554,\"answer_id\":36916778,\"question_id\":35250195},{\"owner\":{\"reputation\":95595,\"user_id\":1081897,\"user_type\":\"registered\",\"profile_image\":\"https://www.gravatar.com/avatar/b46b160c4e606ce0be84dae336ab25f0?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"D Stanley\",\"link\":\"http://stackoverflow.com/users/1081897/d-stanley\"},\"is_accepted\":false,\"score\":1,\"last_activity_date\":1461851549,\"creation_date\":1461851549,\"answer_id\":36916776,\"question_id\":36916679},{\"owner\":{\"reputation\":67504,\"user_id\":171456,\"user_type\":\"registered\",\"accept_rate\":100,\"profile_image\":\"https://i.stack.imgur.com/B1qTo.jpg?s=128&amp;g=1\",\"display_name\":\"Skelly\",\"link\":\"http://stackoverflow.com/users/171456/skelly\"},\"is_accepted\":false,\"score\":1,\"last_activity_date\":1461851546,\"last_edit_date\":1461851546,\"creation_date\":1461845980,\"answer_id\":36914504,\"question_id\":36914207},{\"owner\":{\"reputation\":19271,\"user_id\":5363,\"user_type\":\"registered\",\"accept_rate\":72,\"profile_image\":\"https://www.gravatar.com/avatar/712248df6de12dd9b8ba73869a110f1f?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"Grzenio\",\"link\":\"http://stackoverflow.com/users/5363/grzenio\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851534,\"creation_date\":1461851534,\"answer_id\":36916775,\"question_id\":36908749},{\"owner\":{\"reputation\":255348,\"user_id\":284240,\"user_type\":\"registered\",\"accept_rate\":93,\"profile_image\":\"https://www.gravatar.com/avatar/01d6005ebf89c14de87a62add488aaad?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"Tim Schmelter\",\"link\":\"http://stackoverflow.com/users/284240/tim-schmelter\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851533,\"creation_date\":1461851533,\"answer_id\":36916774,\"question_id\":36916559},{\"owner\":{\"reputation\":84,\"user_id\":3786999,\"user_type\":\"registered\",\"accept_rate\":44,\"profile_image\":\"https://www.gravatar.com/avatar/aff2713c35410ab7cf4be112a91482e6?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"user3786999\",\"link\":\"http://stackoverflow.com/users/3786999/user3786999\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851530,\"creation_date\":1461851530,\"answer_id\":36916771,\"question_id\":36851000},{\"owner\":{\"reputation\":15084,\"user_id\":599792,\"user_type\":\"registered\",\"accept_rate\":75,\"profile_image\":\"https://www.gravatar.com/avatar/7ce404c8d35df762a599cb5173f18456?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"Gareth McCaughan\",\"link\":\"http://stackoverflow.com/users/599792/gareth-mccaughan\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851527,\"creation_date\":1461851527,\"answer_id\":36916770,\"question_id\":36916588},{\"owner\":{\"reputation\":616,\"user_id\":5706328,\"user_type\":\"registered\",\"accept_rate\":57,\"profile_image\":\"https://www.gravatar.com/avatar/e9a58614b31f213d0c7fb543499d44c9?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"Sandeep Bhandari\",\"link\":\"http://stackoverflow.com/users/5706328/sandeep-bhandari\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851520,\"creation_date\":1461851520,\"answer_id\":36916768,\"question_id\":36916232},{\"owner\":{\"reputation\":261,\"user_id\":2611545,\"user_type\":\"registered\",\"profile_image\":\"https://i.stack.imgur.com/oSOwG.jpg?s=128&amp;g=1\",\"display_name\":\"billie\",\"link\":\"http://stackoverflow.com/users/2611545/billie\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851516,\"creation_date\":1461851516,\"answer_id\":36916765,\"question_id\":36901756},{\"owner\":{\"reputation\":91,\"user_id\":6018339,\"user_type\":\"registered\",\"accept_rate\":25,\"profile_image\":\"https://www.gravatar.com/avatar/c41297820b7f5ad270c5d8404ccc38c9?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"Victor Oliveira Antonino\",\"link\":\"http://stackoverflow.com/users/6018339/victor-oliveira-antonino\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851512,\"creation_date\":1461851512,\"answer_id\":36916763,\"question_id\":36908618},{\"owner\":{\"reputation\":3986,\"user_id\":2056394,\"user_type\":\"registered\",\"accept_rate\":50,\"profile_image\":\"https://www.gravatar.com/avatar/0b6d33d66b6a365a20884dc57e04f12d?s=128&amp;d=identicon&amp;r=PG\",\"display_name\":\"denisazevedo\",\"link\":\"http://stackoverflow.com/users/2056394/denisazevedo\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851511,\"creation_date\":1461851511,\"answer_id\":36916762,\"question_id\":36898526},{\"owner\":{\"reputation\":127,\"user_id\":5558231,\"user_type\":\"registered\",\"accept_rate\":53,\"profile_image\":\"https://i.stack.imgur.com/H4vCU.jpg?s=128&amp;g=1\",\"display_name\":\"KubiRoazhon\",\"link\":\"http://stackoverflow.com/users/5558231/kubiroazhon\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851506,\"creation_date\":1461851506,\"answer_id\":36916759,\"question_id\":36916431},{\"owner\":{\"reputation\":13718,\"user_id\":3431869,\"user_type\":\"registered\",\"profile_image\":\"https://www.gravatar.com/avatar/16b2315fa60f613de9565af031264f31?s=128&amp;d=identicon&amp;r=PG&amp;f=1\",\"display_name\":\"vkp\",\"link\":\"http://stackoverflow.com/users/3431869/vkp\"},\"is_accepted\":false,\"score\":0,\"last_activity_date\":1461851499,\"creation_date\":1461851499,\"answer_id\":36916756,\"question_id\":36916578}],\"has_more\":true,\"quota_max\":300,\"quota_remaining\":252}"
+	callback(xhr);
+	*/
+	var xhr  = new XMLHttpRequest();
+    xhr.onreadystatechange = ensureReadiness;
+         
+    function ensureReadiness() {
+    	if(xhr.readyState < 4) {
+        	return;
+        }
+             
+        if(xhr.status !== 200) {
+        	return;
+        }
+        
+        if(xhr.readyState === 4) {
+        	callback(xhr);
+        }
+    }     
+    xhr.open('GET', url, synchronous);
+    xhr.send('');
+    
+}
+
+function callback(xhr) {
+	var result = eval('(' + xhr.response + ')');
+	if (result &amp;&amp; result.items) {
+		setLength(result.items.length);
+		setCount(0);
+		setAnswers(result.items);
+	}
+}
+
+function setLength(length){
+	itemLength = length;
+}
+
+function setCount(count){
+	rowCount = count;
+}
+
+function setAnswers(answerList) {
+	answers = answerList;
+}
+
+
+ajaxCall('https://api.stackexchange.com/2.2/answers?order=desc&amp;sort=activity&amp;site=stackoverflow', callback, true);
+
+//fisTargetFile = new FileInputStream(new File("/Users/usenaratne/temp/test.json"));
+//input = IOUtils.toString(fisTargetFile, "UTF-8");
+
+//input="{\"bindings\": [{\"name\": \"Bobby\", \"title\": \"Manager\", \"phone\": \"555-000-0012\"}, {\"name\": \"Tom\", \"title\": \"Sales Rep\", \"phone\": \"555-000-0037\"}]}"
+// Store the contents in a variable
+//jsonData = input;
+//myJSONObject = eval('(' + jsonData + ')');
+
+//len = myJSONObject.bindings.length; //UHS: Need to change
+
+//count = 0;
+
+
+]]></method>
+        </script-data-source>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="LCBO-producs-data-set" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">0</property>
+                    <property name="name">id</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">name</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">price</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">id</property>
+                </structure>
+                <structure>
+                    <property name="columnName">name</property>
+                </structure>
+                <structure>
+                    <property name="columnName">price</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">id</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">name</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">price</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">LCBO-products-data-source</property>
+            <method name="open"><![CDATA[
+
+
+]]></method>
+            <method name="fetch"><![CDATA[// Loop through the JSON object adding it to the scripted data source
+if(rowCount < itemLength) {
+
+  var nextAnswer = answers[rowCount];	
+  
+  row["id"]     = nextAnswer.answer_id;
+  row["name"]    = nextAnswer.owner.display_name;
+  row["price"]    = nextAnswer.owner.link; 
+  
+  //$.isArray(phone)?"array":"not-array";
+  rowCount++;
+  
+  return true;
+}
+
+return false;]]></method>
+        </script-data-set>
+    </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
             <page-footer>
@@ -15,4 +165,77 @@
             </page-footer>
         </simple-master-page>
     </page-setup>
+    <body>
+        <table id="6">
+            <property name="dataSet">LCBO-producs-data-set</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">id</property>
+                    <text-property name="displayName">id</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["id"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">name</property>
+                    <text-property name="displayName">name</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["name"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">price</property>
+                    <text-property name="displayName">price</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["price"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <column id="25"/>
+            <column id="26"/>
+            <column id="27"/>
+            <header>
+                <row id="7">
+                    <cell id="8">
+                        <label id="9">
+                            <text-property name="text">id</text-property>
+                        </label>
+                    </cell>
+                    <cell id="10">
+                        <label id="11">
+                            <text-property name="text">name</text-property>
+                        </label>
+                    </cell>
+                    <cell id="12">
+                        <label id="13">
+                            <text-property name="text">price</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="14">
+                    <cell id="15">
+                        <data id="16">
+                            <property name="resultSetColumn">id</property>
+                        </data>
+                    </cell>
+                    <cell id="17">
+                        <data id="18">
+                            <property name="resultSetColumn">name</property>
+                        </data>
+                    </cell>
+                    <cell id="19">
+                        <data id="20">
+                            <property name="resultSetColumn">price</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="21">
+                    <cell id="22"/>
+                    <cell id="23"/>
+                    <cell id="24"/>
+                </row>
+            </footer>
+        </table>
+    </body>
 </report>
