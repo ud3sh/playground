@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.eclipse.org/birt/2005/design" version="3.2.23" id="1">
+    <property name="createdBy">Eclipse BIRT Designer Version 4.5.0.v201506092134 Build &lt;@BUILD@></property>
+    <property name="units">in</property>
+    <property name="iconFile">/templates/blank_report.gif</property>
+    <property name="bidiLayoutOrientation">ltr</property>
+    <property name="imageDPI">72</property>
+    <data-sources>
+        <script-data-source name="StackoverflowAnswersScriptedJavaDatasource" id="4">
+            <method name="open"><![CDATA[importPackage(Packages.com.ud3sh.birt.client)
+
+//globals
+itemLength = 0;
+rowCount = 0;
+answers = null;
+
+function fetchAnswers() {
+	var jsonData = StackOverflowAnswersApi.getMostRecentAnswers();
+	var result = eval('(' + jsonData + ')');
+	if (result &amp;&amp; result.items) {
+		setLength(result.items.length);
+		setCount(0);
+		setAnswers(result.items);
+	}
+}
+
+function setLength(length){
+	itemLength = length;
+}
+
+function setCount(count){
+	rowCount = count;
+}
+
+function setAnswers(answerList) {
+	answers = answerList;
+}
+
+fetchAnswers();
+
+]]></method>
+        </script-data-source>
+        <script-data-source name="StackoverflowQuestionScriptedDatasource" id="140"/>
+    </data-sources>
+    <data-sets>
+        <script-data-set name="StackoverflowAnswersScriptedDataset" id="5">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">userName</property>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="position">2</property>
+                    <property name="name">questionId</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">3</property>
+                    <property name="name">reputation</property>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">createDate</property>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="position">5</property>
+                    <property name="name">accepted</property>
+                    <property name="dataType">boolean</property>
+                </structure>
+                <structure>
+                    <property name="position">6</property>
+                    <property name="name">score</property>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">userName</property>
+                </structure>
+                <structure>
+                    <property name="columnName">questionId</property>
+                </structure>
+                <structure>
+                    <property name="columnName">reputation</property>
+                </structure>
+                <structure>
+                    <property name="columnName">createDate</property>
+                </structure>
+                <structure>
+                    <property name="columnName">accepted</property>
+                </structure>
+                <structure>
+                    <property name="columnName">score</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">userName</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                    <structure>
+                        <property name="position">2</property>
+                        <property name="name">questionId</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">3</property>
+                        <property name="name">reputation</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">4</property>
+                        <property name="name">createDate</property>
+                        <property name="dataType">date-time</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
+                        <property name="name">accepted</property>
+                        <property name="dataType">boolean</property>
+                    </structure>
+                    <structure>
+                        <property name="position">6</property>
+                        <property name="name">score</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">StackoverflowAnswersScriptedJavaDatasource</property>
+            <method name="fetch"><![CDATA[var MAX = 2
+if((rowCount < itemLength) &amp;&amp; (rowCount <= MAX)) {
+
+  var nextAnswer = answers[rowCount];	
+  
+  row["id"]     = nextAnswer.answer_id;
+  row["questionId"]     = nextAnswer.question_id;
+  
+  row["userName"]    = nextAnswer.owner.display_name;
+  row["reputation"]    = nextAnswer.owner.reputation;
+  row["createDate"]    = new Date(nextAnswer.creation_date * 1000);//nextAnswer.owner.link; 
+  row["accepted"]    = nextAnswer.is_accepted;
+  row["score"]    = nextAnswer.score; 
+  rowCount++;
+  
+  return true;
+}
+
+return false;
+]]></method>
+        </script-data-set>
+        <script-data-set name="StackoverflowQuestionScriptedDataset" id="141">
+            <list-property name="resultSetHints">
+                <structure>
+                    <property name="position">1</property>
+                    <property name="name">link</property>
+                    <property name="dataType">string</property>
+                </structure>
+            </list-property>
+            <list-property name="columnHints">
+                <structure>
+                    <property name="columnName">link</property>
+                </structure>
+            </list-property>
+            <list-property name="parameters">
+                <structure>
+                    <property name="name">questionId</property>
+                    <property name="dataType">integer</property>
+                    <property name="position">1</property>
+                    <expression name="defaultValue" type="javascript">7</expression>
+                    <property name="isInput">true</property>
+                    <property name="isOutput">false</property>
+                </structure>
+            </list-property>
+            <structure name="cachedMetaData">
+                <list-property name="resultSet">
+                    <structure>
+                        <property name="position">1</property>
+                        <property name="name">link</property>
+                        <property name="dataType">string</property>
+                    </structure>
+                </list-property>
+            </structure>
+            <property name="dataSource">StackoverflowQuestionScriptedDatasource</property>
+            <method name="open"><![CDATA[importPackage(Packages.com.ud3sh.birt.client)
+
+question =  null;
+questionFound = false;
+
+function fetchQuestion(questionId) {
+	var resultData = StackOverflowAnswersApi.getQuestion(questionId);
+	var result = eval('(' + resultData + ')');
+	if (result &amp;&amp; result.items) {
+		question = result.items[0];
+		questionFound = true;
+	}
+}
+
+fetchQuestion(inputParams["questionId"]);
+]]></method>
+            <method name="fetch"><![CDATA[if (questionFound) {
+	row["link"] = question.link;
+	questionFound = false;
+	return true;
+} else {
+	return false;
+}
+]]></method>
+        </script-data-set>
+    </data-sets>
+    <page-setup>
+        <simple-master-page name="Simple MasterPage" id="2">
+            <page-footer>
+                <text id="3">
+                    <property name="contentType">html</property>
+                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                </text>
+            </page-footer>
+        </simple-master-page>
+    </page-setup>
+    <body>
+        <table id="182">
+            <property name="width">7.930555555555555in</property>
+            <property name="dataSet">StackoverflowAnswersScriptedDataset</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">userName</property>
+                    <text-property name="displayName">userName</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["userName"]</expression>
+                    <property name="dataType">string</property>
+                </structure>
+                <structure>
+                    <property name="name">questionId</property>
+                    <text-property name="displayName">questionId</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["questionId"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">reputation</property>
+                    <text-property name="displayName">reputation</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["reputation"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+                <structure>
+                    <property name="name">createDate</property>
+                    <text-property name="displayName">createDate</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["createDate"]</expression>
+                    <property name="dataType">date-time</property>
+                </structure>
+                <structure>
+                    <property name="name">accepted</property>
+                    <text-property name="displayName">accepted</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["accepted"]</expression>
+                    <property name="dataType">boolean</property>
+                </structure>
+                <structure>
+                    <property name="name">score</property>
+                    <text-property name="displayName">score</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["score"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+            <column id="216">
+                <property name="width">1.3333333333333333in</property>
+            </column>
+            <column id="217">
+                <property name="width">2.9166666666666665in</property>
+            </column>
+            <column id="218">
+                <property name="width">0.9444444444444444in</property>
+            </column>
+            <column id="219">
+                <property name="width">1.25in</property>
+            </column>
+            <column id="220">
+                <property name="width">0.9444444444444444in</property>
+            </column>
+            <column id="221">
+                <property name="width">0.5416666666666666in</property>
+            </column>
+            <header>
+                <row id="183">
+                    <cell id="184">
+                        <label id="185">
+                            <text-property name="text">userName</text-property>
+                        </label>
+                    </cell>
+                    <cell id="186">
+                        <label id="187">
+                            <text-property name="text">questionId</text-property>
+                        </label>
+                    </cell>
+                    <cell id="188">
+                        <label id="189">
+                            <text-property name="text">reputation</text-property>
+                        </label>
+                    </cell>
+                    <cell id="190">
+                        <label id="191">
+                            <text-property name="text">createDate</text-property>
+                        </label>
+                    </cell>
+                    <cell id="192">
+                        <label id="193">
+                            <text-property name="text">accepted</text-property>
+                        </label>
+                    </cell>
+                    <cell id="194">
+                        <label id="195">
+                            <text-property name="text">score</text-property>
+                        </label>
+                    </cell>
+                </row>
+            </header>
+            <detail>
+                <row id="196">
+                    <property name="height">1.5in</property>
+                    <cell id="197">
+                        <data id="198">
+                            <property name="resultSetColumn">userName</property>
+                        </data>
+                    </cell>
+                    <cell id="199">
+                        <table id="232">
+                            <property name="dataSet">StackoverflowQuestionScriptedDataset</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">questionId</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">row["questionId"]</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">link</property>
+                                    <text-property name="displayName">link</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["link"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <column id="241"/>
+                            <header>
+                                <row id="233">
+                                    <cell id="234">
+                                        <label id="235">
+                                            <property name="textAlign">left</property>
+                                            <text-property name="text">link</text-property>
+                                        </label>
+                                    </cell>
+                                </row>
+                            </header>
+                            <detail>
+                                <row id="236">
+                                    <property name="height">0.7222222222222222in</property>
+                                    <cell id="237">
+                                        <data id="238">
+                                            <property name="resultSetColumn">link</property>
+                                        </data>
+                                    </cell>
+                                </row>
+                            </detail>
+                        </table>
+                        <data id="200">
+                            <property name="resultSetColumn">questionId</property>
+                        </data>
+                    </cell>
+                    <cell id="201">
+                        <data id="202">
+                            <property name="resultSetColumn">reputation</property>
+                        </data>
+                    </cell>
+                    <cell id="203">
+                        <data id="204">
+                            <property name="resultSetColumn">createDate</property>
+                        </data>
+                    </cell>
+                    <cell id="205">
+                        <data id="206">
+                            <property name="resultSetColumn">accepted</property>
+                        </data>
+                    </cell>
+                    <cell id="207">
+                        <data id="208">
+                            <property name="resultSetColumn">score</property>
+                        </data>
+                    </cell>
+                </row>
+            </detail>
+            <footer>
+                <row id="209">
+                    <property name="height">0.7916666666666666in</property>
+                    <cell id="210"/>
+                    <cell id="211"/>
+                    <cell id="212"/>
+                    <cell id="213"/>
+                    <cell id="214"/>
+                    <cell id="215"/>
+                </row>
+            </footer>
+        </table>
+    </body>
+</report>
