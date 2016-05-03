@@ -39,12 +39,11 @@ public class RestTest {
     }
 
     @Test
-    public void testUtf8() {
+    public void getUTF8Content() {
         String result = Rest.get("http://httpbin.org/encoding/utf8");
         assertNotNull(result);
         assertTrue(result.trim().startsWith("<h1>Unicode Demo</h1>"));
         assertTrue(result.indexOf("The Greek anthem:  Σὲ") > 0);
     }
-
 
 }

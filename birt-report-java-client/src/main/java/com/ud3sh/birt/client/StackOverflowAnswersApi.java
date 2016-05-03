@@ -6,6 +6,10 @@ import com.ud3sh.birt.client.util.Rest;
 public class StackOverflowAnswersApi {
 
     public static String getMostRecentAnswers() {
+        return Rest.get("http://api.stackexchange.com/2.2/answers?order=desc&sort=activity&site=stackoverflow");
+    }
+
+    public static String getMostRecentAnswersHttps() {
         return Rest.get("https://api.stackexchange.com/2.2/answers?order=desc&sort=activity&site=stackoverflow");
     }
 

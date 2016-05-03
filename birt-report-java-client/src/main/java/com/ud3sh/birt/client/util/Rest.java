@@ -34,7 +34,6 @@ public class Rest {
                     }
                     result = sb.toString();
                 }
-
                 return result;
             }
         } catch (IOException e) {
