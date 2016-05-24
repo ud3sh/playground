@@ -388,7 +388,6 @@ fetchQuestion(inputParams["questionId"]);
                 </structure>
                 <structure>
                     <property name="name">questionId</property>
-                    <text-property name="displayName">questionId</text-property>
                     <expression name="expression" type="javascript">dataSetRow["questionId"]</expression>
                     <property name="dataType">integer</property>
                 </structure>
@@ -441,7 +440,7 @@ fetchQuestion(inputParams["questionId"]);
                     </cell>
                     <cell id="186">
                         <label id="187">
-                            <text-property name="text">questionId</text-property>
+                            <text-property name="text">Link</text-property>
                         </label>
                     </cell>
                     <cell id="190">
@@ -470,9 +469,6 @@ fetchQuestion(inputParams["questionId"]);
                         </data>
                     </cell>
                     <cell id="199">
-                        <data id="200">
-                            <property name="resultSetColumn">questionId</property>
-                        </data>
                         <table id="260">
                             <property name="width">4.833333333333333in</property>
                             <property name="dataSet">StackoverflowQuestionScriptedDataset</property>
