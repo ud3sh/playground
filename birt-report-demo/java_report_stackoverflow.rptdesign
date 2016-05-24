@@ -416,46 +416,14 @@ fetchQuestion(inputParams["questionId"]);
                     <property name="dataType">integer</property>
                 </structure>
             </list-property>
-            <column id="216">
-                <property name="width">0.875in</property>
-            </column>
             <column id="217">
-                <property name="width">4.944444444444445in</property>
-            </column>
-            <column id="219">
-                <property name="width">0.8055555555555556in</property>
-            </column>
-            <column id="220">
-                <property name="width">0.7083333333333334in</property>
-            </column>
-            <column id="221">
-                <property name="width">0.5416666666666666in</property>
+                <property name="width">10in</property>
             </column>
             <header>
                 <row id="183">
-                    <cell id="184">
-                        <label id="185">
-                            <text-property name="text">userName</text-property>
-                        </label>
-                    </cell>
                     <cell id="186">
                         <label id="187">
                             <text-property name="text">Link</text-property>
-                        </label>
-                    </cell>
-                    <cell id="190">
-                        <label id="191">
-                            <text-property name="text">createDate</text-property>
-                        </label>
-                    </cell>
-                    <cell id="192">
-                        <label id="193">
-                            <text-property name="text">accepted</text-property>
-                        </label>
-                    </cell>
-                    <cell id="194">
-                        <label id="195">
-                            <text-property name="text">score</text-property>
                         </label>
                     </cell>
                 </row>
@@ -463,14 +431,9 @@ fetchQuestion(inputParams["questionId"]);
             <detail>
                 <row id="196">
                     <property name="height">3.2777777777777777in</property>
-                    <cell id="197">
-                        <data id="198">
-                            <property name="resultSetColumn">userName</property>
-                        </data>
-                    </cell>
                     <cell id="199">
                         <table id="260">
-                            <property name="width">4.833333333333333in</property>
+                            <property name="width">7.958333333333333in</property>
                             <property name="dataSet">StackoverflowQuestionScriptedDataset</property>
                             <list-property name="paramBindings">
                                 <structure>
@@ -495,10 +458,10 @@ fetchQuestion(inputParams["questionId"]);
                                 </structure>
                             </list-property>
                             <column id="274">
-                                <property name="width">3.4166666666666665in</property>
+                                <property name="width">5.638888888888889in</property>
                             </column>
                             <column id="275">
-                                <property name="width">1.4166666666666667in</property>
+                                <property name="width">2.3194444444444446in</property>
                             </column>
                             <header>
                                 <row id="261">
@@ -574,31 +537,12 @@ fetchQuestion(inputParams["questionId"]);
                             </footer>
                         </table>
                     </cell>
-                    <cell id="203">
-                        <data id="204">
-                            <property name="resultSetColumn">createDate</property>
-                        </data>
-                    </cell>
-                    <cell id="205">
-                        <data id="206">
-                            <property name="resultSetColumn">accepted</property>
-                        </data>
-                    </cell>
-                    <cell id="207">
-                        <data id="208">
-                            <property name="resultSetColumn">score</property>
-                        </data>
-                    </cell>
                 </row>
             </detail>
             <footer>
                 <row id="209">
                     <property name="height">1.6805555555555556in</property>
-                    <cell id="210"/>
                     <cell id="211"/>
-                    <cell id="213"/>
-                    <cell id="214"/>
-                    <cell id="215"/>
                 </row>
             </footer>
         </table>
