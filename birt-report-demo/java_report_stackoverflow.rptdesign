@@ -430,7 +430,7 @@ fetchQuestion(inputParams["questionId"]);
             </header>
             <detail>
                 <row id="196">
-                    <property name="height">3.2777777777777777in</property>
+                    <property name="height">2.138888888888889in</property>
                     <cell id="199">
                         <table id="260">
                             <property name="width">7.958333333333333in</property>
@@ -480,7 +480,7 @@ fetchQuestion(inputParams["questionId"]);
                             </header>
                             <detail>
                                 <row id="266">
-                                    <property name="height">1.5972222222222223in</property>
+                                    <property name="height">1.2916666666666667in</property>
                                     <cell id="267">
                                         <data id="268">
                                             <property name="resultSetColumn">link</property>
@@ -541,8 +541,45 @@ fetchQuestion(inputParams["questionId"]);
             </detail>
             <footer>
                 <row id="209">
-                    <property name="height">1.6805555555555556in</property>
+                    <property name="height">0.20833333333333334in</property>
                     <cell id="211"/>
+                </row>
+            </footer>
+        </table>
+        <data id="286">
+            <property name="dataSet">StackoverflowAnswersScriptedDataset</property>
+            <list-property name="boundDataColumns">
+                <structure>
+                    <property name="name">questionId</property>
+                    <text-property name="displayName">questionId</text-property>
+                    <expression name="expression" type="javascript">dataSetRow["questionId"]</expression>
+                    <property name="dataType">integer</property>
+                </structure>
+            </list-property>
+        </data>
+        <table id="287">
+            <column id="300"/>
+            <column id="301"/>
+            <header>
+                <row id="288">
+                    <cell id="289"/>
+                    <cell id="290"/>
+                </row>
+            </header>
+            <detail>
+                <row id="291">
+                    <cell id="292"/>
+                    <cell id="293"/>
+                </row>
+                <row id="294">
+                    <cell id="295"/>
+                    <cell id="296"/>
+                </row>
+            </detail>
+            <footer>
+                <row id="297">
+                    <cell id="298"/>
+                    <cell id="299"/>
                 </row>
             </footer>
         </table>
