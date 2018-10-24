@@ -1,0 +1,9 @@
+**/sbt-target
+**/target
+.idea/
+*.iml
+.settings/
+sbt-dist/
+.DS_Store
+sbt
+sbt.bat
